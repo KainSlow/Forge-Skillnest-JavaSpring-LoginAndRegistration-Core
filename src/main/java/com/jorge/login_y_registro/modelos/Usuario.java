@@ -16,6 +16,7 @@ import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import jakarta.persistence.Transient;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -43,6 +44,7 @@ public class Usuario {
     @Size(min = 3, message = "Ingresa un apellido con más de 3 letras.")
     private String apellido;
 
+    @NotNull(message = "Por favor provee una fecha de nacimiento")
     @Past(message = "Tu fecha de nacimiento debe ser una fecha pasada")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Temporal(TemporalType.DATE)
