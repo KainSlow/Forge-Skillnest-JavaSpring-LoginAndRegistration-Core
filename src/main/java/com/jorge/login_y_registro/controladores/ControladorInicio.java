@@ -72,12 +72,12 @@ public class ControladorInicio {
         Usuario match = this.servicioUsuarios.encontrarPorUsuario(usuario.getUsuarioLogin());
 
         if (match == null) {
-            validaciones.rejectValue("usuarioLogin", "usuarioNoEncontrado",
-                    "El nombre de usuario no está registrado.");
+            validaciones.rejectValue("usuarioClave", "usuarioNoEncontrado",
+                    "Nombre de usuario o contraseña incorrectas");
         } else {
-
             if (!BCrypt.checkpw(usuario.getUsuarioClave(), match.getClave())) {
-                validaciones.rejectValue("clave", "claveNoCoincide", "Contraseña incorrecta");
+                validaciones.rejectValue("usuarioClave", "claveNoCoincide",
+                        "Nombre de usuario o contraseña incorrectas");
             }
         }
 
