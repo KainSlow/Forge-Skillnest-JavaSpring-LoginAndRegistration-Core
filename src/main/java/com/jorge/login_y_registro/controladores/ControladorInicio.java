@@ -11,6 +11,7 @@ import com.jorge.login_y_registro.modelos.LoginUsuario;
 import com.jorge.login_y_registro.modelos.Usuario;
 import com.jorge.login_y_registro.servicios.ServicioUsuarios;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,12 +32,18 @@ public class ControladorInicio {
     }
 
     @GetMapping("/inicio")
-    public String muestraInicio() {
+    public String muestraInicio(
+            HttpSession sesion) {
+
+        if (sesion.getAttribute("id") == null) {
+            return "redirect:/";
+        }
         return "inicio.jsp";
     }
 
     @PostMapping("/procesa/registro")
     public String procesaRegistro(
+            HttpSession sesion,
             @ModelAttribute("usuario") LoginUsuario usuario,
             BindingResult validaciones,
             @Valid @ModelAttribute("usuarioNuevo") Usuario usuarioNuevo,
@@ -60,11 +67,20 @@ public class ControladorInicio {
             return "index.jsp";
         }
 
+        sesion.setAttribute("id", usuarioNuevo.getId());
+        sesion.setAttribute("nombreUsuario", usuarioNuevo.getNombreUsuario());
+        sesion.setAttribute("nombre", usuarioNuevo.getNombre());
+        sesion.setAttribute("apellido", usuarioNuevo.getApellido());
+        sesion.setAttribute("fechaNacimiento", usuarioNuevo.getFechaNacimiento());
+        sesion.setAttribute("correo", usuarioNuevo.getCorreo());
+
         return "redirect:/inicio";
     }
 
     @PostMapping("/procesa/login")
-    public String procesaIngreso(@Valid @ModelAttribute("usuario") LoginUsuario usuario,
+    public String procesaIngreso(
+            HttpSession sesion,
+            @Valid @ModelAttribute("usuario") LoginUsuario usuario,
             BindingResult validaciones,
             @ModelAttribute("usuarioNuevo") Usuario usuarioNuevo,
             BindingResult validacionesUsuarioNuevo) {
@@ -85,7 +101,20 @@ public class ControladorInicio {
             return "index.jsp";
         }
 
+        sesion.setAttribute("id", match.getId());
+        sesion.setAttribute("nombreUsuario", match.getNombreUsuario());
+        sesion.setAttribute("nombre", match.getNombre());
+        sesion.setAttribute("apellido", match.getApellido());
+        sesion.setAttribute("fechaNacimiento", match.getFechaNacimiento());
+        sesion.setAttribute("correo", match.getCorreo());
+
         return "redirect:/inicio";
+    }
+
+    @PostMapping("/procesa/logout")
+    public String procesaLogout(HttpSession sesion) {
+        sesion.invalidate();
+        return "redirect:/";
     }
 
 }
