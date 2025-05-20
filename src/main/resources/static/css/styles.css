@@ -50,7 +50,7 @@ caption {
 }
 
 input:focus {
-  border-color: rgb(30, 30, 40);
+  border-color: rgb(50, 50, 60);
   outline: 0;
 }
 
@@ -216,16 +216,21 @@ a *:hover {
 
 .inputBox {
   position: relative;
+  min-width: 256px;
 }
 
 .inputBox input,
 .inputBox textarea,
 .inputBox select {
   background-color: rgb(10, 10, 13);
-  border: 2px solid rgb(15, 15, 18);
+  border: 2px solid rgb(35, 35, 38);
   border-radius: 12px;
   padding: 0.67rem 1rem;
   transition: all 0.01s ease-out;
+}
+
+.inputBox * {
+  flex: 1;
 }
 
 .inputBox textarea {
@@ -240,6 +245,12 @@ a *:hover {
   background-color: rgb(10, 10, 13);
   border-radius: 12px;
   padding: 0.34rem;
+}
+
+.inputBox [id$="errors"] {
+  background-color: rgb(80, 0, 0);
+  padding: 0.67rem 1rem;
+  border-radius: 12px;
 }
 
 .f1 {
