@@ -90,10 +90,13 @@ public class ControladorInicio {
         if (match == null) {
             validaciones.rejectValue("usuarioClave", "usuarioNoEncontrado",
                     "Nombre de usuario o contraseña incorrectas");
+            return "index.jsp";
+
         } else {
             if (!BCrypt.checkpw(usuario.getUsuarioClave(), match.getClave())) {
                 validaciones.rejectValue("usuarioClave", "claveNoCoincide",
                         "Nombre de usuario o contraseña incorrectas");
+                return "index.jsp";
             }
         }
 
